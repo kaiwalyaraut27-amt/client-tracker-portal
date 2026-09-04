@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muktai Power Solutions | Client Project Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f6f8fb;--surface:#ffffff;--surface2:#f0f5fb;--surface3:#e8f0f8;
+      --border:#dfe8f2;--border2:#c9d8e7;
+      --text:#132033;--muted:#607088;--soft:#8b99aa;
+      --blue:#2563eb;--blue2:#1d4ed8;--blueg:#e8f0ff;
+      --green:#10b981;--greeng:#e6f8f1;
+      --amber:#f59e0b;--amberg:#fff4dc;
+      --red:#ef4444;--redg:#ffecec;
+      --purple:#7c3aed;--purpleg:#f1ebff;
+      --cyan:#0891b2;--cyang:#e5f8fc;
+      --shadow:0 18px 45px rgba(30,48,80,.08);
+      --radius:8px;
+      --font:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    body{min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+    button,input,select,textarea{font:inherit}
+    button{border:0;cursor:pointer}
+    .portal{min-height:100vh;display:grid;grid-template-columns:252px 1fr}
+    .sidebar{background:#fbfdff;border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .brand{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
+    .brand-row{display:flex;align-items:center;gap:12px}
+    .brand-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;color:#fff;box-shadow:0 10px 24px rgba(37,99,235,.2)}
+    .brand-icon i{font-size:24px}
+    .brand-name{font-size:14px;font-weight:800;letter-spacing:.2px}
+    .brand-sub{font-size:12px;color:var(--muted);margin-top:2px}
+    .nav{padding:16px 12px;flex:1}
+    .nav-title{font-size:11px;font-weight:800;color:var(--soft);text-transform:uppercase;letter-spacing:.8px;padding:14px 10px 8px}
+    .nav-item{width:100%;height:40px;display:flex;align-items:center;gap:10px;border-radius:8px;padding:0 10px;color:var(--muted);font-weight:600;margin-bottom:4px;background:transparent;border:0;text-align:left}
+    .nav-item i{font-size:19px;width:20px;text-align:center}
+    .nav-item:hover{background:var(--surface2);color:var(--text)}
+    .nav-item.active{background:var(--blueg);color:var(--blue)}
+    .badge{margin-left:auto;background:var(--blue);color:#fff;border-radius:999px;font-size:11px;padding:2px 7px;font-weight:800}
+    .client-box{margin:12px;padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--surface);box-shadow:0 10px 22px rgba(30,48,80,.05)}
+    .client-row{display:flex;align-items:center;gap:10px}
+    .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--purpleg);color:var(--purple);font-weight:800}
+    .client-name{font-size:13px;font-weight:800}.client-role{font-size:12px;color:var(--soft);margin-top:2px}
+    .main{min-width:0}
+    .topbar{height:72px;background:rgba(255,255,255,.86);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:5}
+    .title h1{font-size:20px;line-height:1.1}.title p{color:var(--muted);font-size:12px;margin-top:5px}
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{height:38px;display:inline-flex;align-items:center;gap:8px;padding:0 13px;border-radius:8px;background:var(--surface);border:1px solid var(--border2);color:var(--text);font-weight:700;box-shadow:0 5px 12px rgba(30,48,80,.04)}
+    .btn:hover{border-color:var(--blue);color:var(--blue)}.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}.btn.primary:hover{background:var(--blue2);color:#fff}
+    .btn.icon{width:38px;padding:0;justify-content:center}.btn i{font-size:18px}
+    .content{padding:24px 28px 34px}
+    .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:16px;margin-bottom:16px}
+    .hero-panel{background:linear-gradient(135deg,#fff,#eef6ff);border:1px solid var(--border);border-radius:8px;padding:22px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .hero-panel:after{content:"";position:absolute;right:-80px;top:-90px;width:240px;height:240px;background:radial-gradient(circle,rgba(37,99,235,.14),transparent 65%)}
+    .eyebrow{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border-radius:999px;background:var(--greeng);color:#047857;font-size:12px;font-weight:800;margin-bottom:14px}
+    .hero h2{font-size:30px;letter-spacing:0;max-width:680px}.hero p{color:var(--muted);line-height:1.65;max-width:780px;margin-top:10px}
+    .hero-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+    .mini{background:rgba(255,255,255,.75);border:1px solid var(--border);border-radius:8px;padding:12px}
+    .mini span{display:block;color:var(--soft);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}.mini strong{display:block;font-size:20px;margin-top:6px}
+    .manager-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:18px;box-shadow:var(--shadow)}
+    .manager-top{display:flex;justify-content:space-between;gap:14px}.manager-top h3{font-size:15px}.manager-top p{font-size:12px;color:var(--muted);margin-top:4px}
+    .manager-photo{width:48px;height:48px;border-radius:12px;background:var(--cyang);color:var(--cyan);display:grid;place-items:center;font-weight:900}
+    .quick-list{margin-top:16px;display:grid;gap:10px}.quick{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:var(--surface2);border:1px solid var(--border)}
+    .quick i{color:var(--blue);font-size:18px}.quick div{font-size:12px;color:var(--muted)}.quick strong{display:block;color:var(--text);font-size:13px;margin-bottom:2px}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+    .stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:0 12px 28px rgba(30,48,80,.06)}
+    .stat-head{display:flex;align-items:center;justify-content:space-between;color:var(--soft);font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+    .stat-head i{font-size:20px}.stat strong{display:block;font-size:26px;margin-top:12px}.stat small{display:block;color:var(--muted);margin-top:5px}
+    .grid{display:grid;grid-template-columns:minmax(320px,1.05fr) minmax(320px,.95fr);gap:16px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 12px 28px rgba(30,48,80,.06);overflow:hidden}
+    .card-head{min-height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--border)}
+    .card-title{font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px}.card-title i{color:var(--blue)}
+    .card-link{font-weight:800;font-size:12px;color:var(--blue)}
+    .card-body{padding:16px 18px}
+    .project-list{display:grid;gap:10px}
+    .project{border:1px solid var(--border);background:#fbfdff;border-radius:8px;padding:14px;transition:.18s ease}
+    .project:hover,.project.selected{border-color:var(--blue);box-shadow:0 12px 24px rgba(37,99,235,.08);transform:translateY(-1px)}
+    .project.selected{background:var(--blueg)}
+    .project-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.project h3{font-size:14px;margin-bottom:4px}.meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;white-space:nowrap}
+    .pill.active{background:var(--greeng);color:#047857}.pill.hold{background:var(--amberg);color:#b45309}.pill.review{background:var(--purpleg);color:var(--purple)}
+    .tag{background:var(--surface3);color:var(--muted);border:1px solid var(--border2)}
+    .progress-row{display:flex;align-items:center;gap:10px;margin-top:12px}.bar{height:8px;background:#dbe7f2;border-radius:999px;overflow:hidden;flex:1}.fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green))}
+    .percent{font-weight:900;font-size:12px;color:var(--text)}
+    .detail-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:16px}
+    .summary{display:grid;gap:10px}.summary-item{border:1px solid var(--border);background:var(--surface2);border-radius:8px;padding:12px}
+    .summary-item span{display:block;color:var(--soft);font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:800}.summary-item strong{display:block;margin-top:5px}
+    .milestones{position:relative;display:grid;gap:0}.milestone{display:grid;grid-template-columns:28px 1fr auto;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+    .milestone:last-child{border-bottom:0}.dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;margin-top:1px}.dot.done{background:var(--greeng);color:var(--green)}.dot.active{background:var(--blueg);color:var(--blue)}.dot.pending{background:var(--surface3);color:var(--soft)}
+    .ms-name{font-weight:800;font-size:13px}.ms-date{font-size:12px;color:var(--muted);margin-top:3px}
+    .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.photo{aspect-ratio:1.25;border:1px solid var(--border);border-radius:8px;overflow:hidden;position:relative;background:var(--surface2)}
+    .photo svg{width:100%;height:100%;display:block}.photo span{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(255,255,255,.9);border:1px solid var(--border);border-radius:6px;padding:5px 7px;font-size:11px;font-weight:800;color:var(--text)}
+    .activity{display:grid;gap:0}.activity-item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--border)}.activity-item:last-child{border-bottom:0}
+    .act-icon{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;flex:0 0 auto}.act-icon.photo{background:var(--purpleg);color:var(--purple)}.act-icon.progress{background:var(--greeng);color:var(--green)}.act-icon.doc{background:var(--blueg);color:var(--blue)}.act-icon.note{background:var(--amberg);color:var(--amber)}
+    .activity strong{display:block;font-size:13px}.activity span{display:block;font-size:12px;color:var(--muted);margin-top:3px}
+    .bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    .project-workspace{display:none;margin-top:16px}
+    .project-workspace.show{display:block}
+    .doc-row,.request-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}.doc-row:last-child,.request-row:last-child{border-bottom:0}
+    .file{display:flex;align-items:center;gap:10px}.file i{width:34px;height:34px;border-radius:8px;background:var(--redg);color:var(--red);display:grid;place-items:center;font-size:18px}.file strong{display:block;font-size:13px}.file span{font-size:12px;color:var(--muted)}
+    .auth-screen{min-height:100vh;display:grid;grid-template-columns:1fr 460px;background:linear-gradient(135deg,#f9fbff,#eef6ff)}
+    .auth-visual{padding:44px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+    .auth-visual:after{content:"";position:absolute;right:8%;top:12%;width:330px;height:330px;background:radial-gradient(circle,rgba(37,99,235,.16),transparent 68%)}
+    .auth-brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:18px;position:relative;z-index:1}
+    .auth-copy{max-width:680px;position:relative;z-index:1}
+    .auth-copy .eyebrow{margin-bottom:18px}
+    .auth-copy h1{font-size:44px;line-height:1.08;letter-spacing:0;max-width:620px}
+    .auth-copy p{font-size:16px;line-height:1.75;color:var(--muted);margin-top:18px;max-width:610px}
+    .auth-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px;max-width:640px}
+    .auth-preview .mini{background:rgba(255,255,255,.86)}
+    .auth-panel{background:#fff;border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:32px;box-shadow:-18px 0 45px rgba(30,48,80,.08)}
+    .auth-card{width:100%;max-width:380px}
+    .auth-tabs{height:44px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:4px;display:grid;grid-template-columns:1fr 1fr;margin-bottom:20px}
+    .auth-tab{border-radius:6px;background:transparent;color:var(--muted);font-weight:900}.auth-tab.active{background:#fff;color:var(--blue);box-shadow:0 6px 14px rgba(30,48,80,.08)}
+    .auth-form{display:none;gap:13px}.auth-form.active{display:grid}
+    .auth-card h2{font-size:24px;margin-bottom:6px}.auth-card p{color:var(--muted);line-height:1.55;margin-bottom:20px}
+    .auth-note{margin-top:14px;padding:12px;border-radius:8px;background:var(--blueg);border:1px solid #c8dcff;color:#1e40af;font-size:12px;line-height:1.55}
+    .auth-error{display:none;padding:10px 12px;border-radius:8px;background:var(--redg);color:#b91c1c;font-weight:700;font-size:12px}.auth-error.show{display:block}
+    .portal.locked{display:none}
+    .modal{position:fixed;inset:0;background:rgba(15,23,42,.35);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.show{display:flex}
+    .modal-card{width:min(520px,100%);background:#fff;border-radius:8px;border:1px solid var(--border);box-shadow:0 30px 80px rgba(15,23,42,.25);overflow:hidden}
+    .modal-head{height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--border)}.modal-head h3{font-size:16px}.close{background:var(--surface2);width:34px;height:34px;border-radius:8px;color:var(--muted)}
+    .form{padding:18px;display:grid;gap:12px}.field label{font-size:12px;font-weight:800;color:var(--muted);display:block;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border2);border-radius:8px;padding:10px 12px;background:#fff;color:var(--text)}.field textarea{min-height:96px;resize:vertical}
+    .toast{position:fixed;right:24px;bottom:24px;background:#0f172a;color:#fff;padding:12px 14px;border-radius:8px;box-shadow:0 16px 40px rgba(15,23,42,.25);display:none;font-weight:700;z-index:30}.toast.show{display:block}
+    @media(max-width:1100px){.auth-screen{grid-template-columns:1fr}.auth-panel{border-left:0;border-top:1px solid var(--border)}.portal{grid-template-columns:1fr}.sidebar{position:static;height:auto}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.nav-title,.client-box{display:none}.topbar{position:static}.hero,.grid,.bottom-grid{grid-template-columns:1fr}.stats,.hero-metrics{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.auth-screen{display:block}.auth-visual{padding:24px}.auth-copy h1{font-size:30px}.auth-preview{grid-template-columns:1fr}.auth-panel{padding:24px}.topbar{height:auto;padding:16px;align-items:flex-start;gap:14px;flex-direction:column}.actions{width:100%;overflow:auto}.content{padding:16px}.stats,.hero-metrics,.detail-layout{grid-template-columns:1fr}.photos{grid-template-columns:1fr 1fr}.nav{grid-template-columns:1fr 1fr}.btn span{display:none}.hero h2{font-size:24px}}
+  </style>
+</head>
+<body>
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-visual">
+      <div class="auth-brand">
+        <div class="brand-icon"><i class="ti ti-bolt"></i></div>
+        <span>Muktai Power Solutions</span>
+      </div>
+      <div class="auth-copy">
+        <div class="eyebrow"><i class="ti ti-shield-lock"></i> Secure client access</div>
+        <h1>Login to track your electrical and civil project progress.</h1>
+        <p>Clients can view milestones, site photos, project documents, budgets, and manager updates from one clean dashboard.</p>
+        <div class="auth-preview">
+          <div class="mini"><span>Live progress</span><strong>78%</strong></div>
+          <div class="mini"><span>Site photos</span><strong>18</strong></div>
+          <div class="mini"><span>Open alerts</span><strong>2</strong></div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="loginTab" onclick="switchAuth('login')">Login</button>
+          <button class="auth-tab" id="signupTab" onclick="switchAuth('signup')">Sign Up</button>
+        </div>
+        <form class="auth-form active" id="loginForm" onsubmit="loginUser(event)">
+          <div>
+            <h2>Welcome back</h2>
+            <p>Use your client account to continue to the project portal.</p>
+          </div>
+          <div class="auth-error" id="loginError"></div>
+          <div class="field"><label>Email</label><input id="loginEmail" type="email" value="warehouse@muktai.com" required></div>
+          <div class="field"><label>Password</label><input id="loginPassword" type="password" value="client123" required></div>
+          <button class="btn primary" type="submit"><i class="ti ti-login-2"></i>Login to Portal</button>
+          <div class="auth-note">Demo clients:<br>warehouse@muktai.com / client123<br>pune@muktai.com / client123<br>substation@muktai.com / client123</div>
+        </form>
+        <form class="auth-form" id="signupForm" onsubmit="signupUser(event)">
+          <div>
+            <h2>Create account</h2>
+            <p>Register as a client to access your project dashboard.</p>
+          </div>
+          <div class="auth-error" id="signupError"></div>
+          <div class="field"><label>Full Name</label><input id="signupName" type="text" placeholder="Enter your name" required></div>
+          <div class="field"><label>Email</label><input id="signupEmail" type="email" placeholder="client@example.com" required></div>
+          <div class="field"><label>Company / Site Name</label><input id="signupCompany" type="text" placeholder="Example: Warehouse Project" required></div>
+          <div class="field"><label>Assigned Project</label><select id="signupProject"></select></div>
+          <div class="field"><label>Password</label><input id="signupPassword" type="password" minlength="6" placeholder="Minimum 6 characters" required></div>
+          <button class="btn primary" type="submit"><i class="ti ti-user-plus"></i>Create Account</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="portal locked" id="portalApp">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-row">
+          <div class="brand-icon"><i class="ti ti-bolt"></i></div>
+          <div><div class="brand-name">Muktai Power Solutions</div><div class="brand-sub">Client Project Portal</div></div>
+        </div>
+      </div>
+      <nav class="nav">
+        <div class="nav-title">Workspace</div>
+        <button class="nav-item active" onclick="handleNav(this,'dashboard')"><i class="ti ti-layout-dashboard"></i>Dashboard</button>
+        <button class="nav-item" onclick="handleNav(this,'projects')"><i class="ti ti-building-factory-2"></i>Projects <span class="badge" id="projectNavBadge">1</span></button>
+        <button class="nav-item" onclick="handleNav(this,'photos')"><i class="ti ti-photo"></i>Site Photos</button>
+        <button class="nav-item" onclick="handleNav(this,'reports')"><i class="ti ti-file-certificate"></i>Reports</button>
+        <div class="nav-title">Account</div>
+        <button class="nav-item" onclick="handleNav(this,'alerts')"><i class="ti ti-bell"></i>Alerts <span class="badge">2</span></button>
+        <button class="nav-item" onclick="handleNav(this,'messages')"><i class="ti ti-message-2"></i>Messages</button>
+        <button class="nav-item" onclick="handleNav(this,'settings')"><i class="ti ti-settings"></i>Settings</button>
+      </nav>
+      <div class="client-box">
+        <div class="client-row"><div class="avatar" id="clientAvatar">RK</div><div><div class="client-name" id="clientName">Rajesh Kumar</div><div class="client-role" id="clientRole">Client Account</div></div></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title">
+          <h1>Project Progress Tracking</h1>
+          <p>Live milestones, field photos, documents, and completion status for electrical and civil work.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="downloadReport()"><i class="ti ti-download"></i><span>Report</span></button>
+          <button class="btn" onclick="openModal('messageModal')"><i class="ti ti-message-circle"></i><span>Contact</span></button>
+          <button class="btn primary" onclick="openModal('requestModal')"><i class="ti ti-plus"></i><span>New Request</span></button>
+          <button class="btn icon" onclick="logoutUser()" title="Logout"><i class="ti ti-logout"></i></button>
+        </div>
+      </header>
+
+      <section class="content" id="dashboardSection">
+        <div class="hero">
+          <div class="hero-panel">
+            <div class="eyebrow"><i class="ti ti-circle-check"></i> Client-facing live dashboard</div>
+            <h2>Track every site milestone from survey to final handover.</h2>
+            <p>This portal helps customers see transparent progress for electrical and civil projects, including milestone status, uploaded site photos, budget updates, documents, and manager communication.</p>
+            <div class="hero-metrics">
+              <div class="mini"><span>Active project</span><strong id="activeProjectsCount">1</strong></div>
+              <div class="mini"><span>Average progress</span><strong id="avgProgress">67%</strong></div>
+              <div class="mini"><span>Open requests</span><strong id="openRequestsCount">0</strong></div>
+              <div class="mini"><span>Site photos</span><strong id="sitePhotosCount">0</strong></div>
+            </div>
+          </div>
+          <div class="manager-card">
+            <div class="manager-top">
+              <div><h3>Assigned Project Manager</h3><p id="managerText">Vikram Patil handles daily site updates.</p></div>
+              <div class="manager-photo" id="managerInitials">VP</div>
+            </div>
+            <div class="quick-list">
+              <div class="quick"><i class="ti ti-phone"></i><div><strong>Support line</strong>+91 98765 43210</div></div>
+              <div class="quick"><i class="ti ti-clock-hour-4"></i><div><strong>Update frequency</strong>Every working day by 5 PM</div></div>
+              <div class="quick"><i class="ti ti-shield-check"></i><div><strong>Safety status</strong>No high-risk incident reported</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="stat-head">Project Budget <i class="ti ti-wallet"></i></div><strong id="projectBudget">Rs. 22.4L</strong><small id="projectSpent">Rs. 17.1L spent on this project</small></div>
+          <div class="stat"><div class="stat-head">Schedule Status <i class="ti ti-calendar-check"></i></div><strong id="scheduleStatus">On Track</strong><small id="scheduleNote">Current client project status</small></div>
+          <div class="stat"><div class="stat-head">Completed Milestones <i class="ti ti-list-check"></i></div><strong id="milestoneCount">8</strong><small>Across electrical and civil work</small></div>
+          <div class="stat"><div class="stat-head">Project Deadline <i class="ti ti-hourglass-high"></i></div><strong id="deadlineValue">Aug 10</strong><small id="deadlineNote">Assigned project handover</small></div>
+        </div>
+
+        <div class="grid" id="homeOverview">
+          <section class="card" id="projectsSection">
+            <div class="card-head"><div class="card-title"><i class="ti ti-building-community"></i>Your Projects</div><button class="card-link" onclick="openProjectWorkspace()">Open project details</button></div>
+            <div class="card-body"><div class="project-list" id="projectList"></div></div>
+          </section>
+
+          <section class="card">
+            <div class="card-head"><div class="card-title"><i class="ti ti-activity"></i>Recent Activity</div><button class="card-link" onclick="showToast('Activity feed refreshed.')">Refresh</button></div>
+            <div class="card-body"><div class="activity" id="activityFeed"></div></div>
+          </section>
+        </div>
+
+        <div class="project-workspace" id="projectWorkspace">
+          <section class="card" id="detailSection">
+            <div class="card-head" id="detailHead"></div>
+            <div class="card-body" id="detailBody"></div>
+          </section>
+
+          <div class="bottom-grid">
+            <section class="card" id="reportsSection">
+              <div class="card-head"><div class="card-title"><i class="ti ti-files"></i>Project Documents</div><button class="card-link" onclick="showToast('Document download started.')">Download all</button></div>
+              <div class="card-body" id="documents"></div>
+            </section>
+            <section class="card" id="requestsSection">
+              <div class="card-head"><div class="card-title"><i class="ti ti-clipboard-list"></i>Client Requests</div><button class="card-link" onclick="openModal('requestModal')">Add request</button></div>
+              <div class="card-body" id="requests"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="requestModal">
+    <div class="modal-card">
+      <div class="modal-head"><h3>New Client Request</h3><button class="close" onclick="closeModal('requestModal')"><i class="ti ti-x"></i></button></div>
+      <div class="form">
+        <div class="field"><label>Project</label><select id="requestProject"></select></div>
+        <div class="field"><label>Request Type</label><select id="requestType"><option>Site visit update</option><option>Material clarification</option><option>Design change</option><option>Payment document</option></select></div>
+        <div class="field"><label>Message</label><textarea id="requestMessage" placeholder="Write your request here..."></textarea></div>
+        <button class="btn primary" onclick="submitRequest()"><i class="ti ti-send"></i>Submit Request</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="messageModal">
+    <div class="modal-card">
+      <div class="modal-head"><h3>Contact Project Manager</h3><button class="close" onclick="closeModal('messageModal')"><i class="ti ti-x"></i></button></div>
+      <div class="form">
+        <div class="field"><label>Subject</label><input value="Progress clarification" /></div>
+        <div class="field"><label>Message</label><textarea>Hi, please share the latest field update for my selected project.</textarea></div>
+        <button class="btn primary" onclick="sendMessage()"><i class="ti ti-message"></i>Send Message</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const projects=[
+      {id:0,name:'Nagpur Warehouse Complex',type:'Civil + Electrical',status:'active',progress:78,location:'Nagpur, Maharashtra',start:'Jan 15, 2026',deadline:'Aug 10, 2026',budget:'Rs. 22.4L',spent:'Rs. 17.1L',manager:'Vikram Patil',risk:'Low',next:'Internal electrical wiring inspection',photos:['Block B slab','Roofing work','Cable shaft','Foundation'],milestones:[['Site survey and foundation','Feb 2, 2026','done'],['Structural framework','Apr 18, 2026','done'],['Roofing and exterior','May 30, 2026','done'],['Internal electrical wiring','Jun 20, 2026','active'],['Flooring and finishing','Jul 15, 2026','pending'],['Final inspection and handover','Aug 10, 2026','pending']]},
+      {id:1,name:'Pune Office Complex Rewiring',type:'Electrical',status:'active',progress:55,location:'Pune, Maharashtra',start:'Mar 10, 2026',deadline:'Jul 25, 2026',budget:'Rs. 14.8L',spent:'Rs. 8.1L',manager:'Anita Deshmukh',risk:'Medium',next:'Main cable laying for floors 4 to 6',photos:['Panel room','Cable tray','DB testing','Earth pit'],milestones:[['Load assessment and BOQ','Mar 22, 2026','done'],['Panel room setup','Apr 10, 2026','done'],['Main cable laying floors 1 to 3','May 20, 2026','active'],['Main cable laying floors 4 to 6','Jun 28, 2026','pending'],['Earthing and safety systems','Jul 10, 2026','pending'],['Testing and commissioning','Jul 25, 2026','pending']]},
+      {id:2,name:'Amravati 33kV Substation',type:'Electrical + Civil',status:'hold',progress:32,location:'Amravati, Maharashtra',start:'Apr 5, 2026',deadline:'Oct 30, 2026',budget:'Rs. 11.3L',spent:'Rs. 3.6L',manager:'Suresh Bane',risk:'Vendor hold',next:'Transformer delivery approval',photos:['Civil base','Transformer bay','HT yard','Cable trench'],milestones:[['Civil foundation work','Apr 28, 2026','done'],['Transformer delivery and install','May 15, 2026','active'],['HT panel installation','Jun 30, 2026','pending'],['Protection relay setup','Aug 10, 2026','pending'],['Load testing','Sep 20, 2026','pending'],['Energization and handover','Oct 30, 2026','pending']]}
+    ];
+    const activity=[
+      {projectId:0,type:'photo',title:'12 new site photos uploaded',time:'Today, 11:30 AM - Nagpur Warehouse'},
+      {projectId:0,type:'progress',title:'Progress updated to 78% after structural phase',time:'Yesterday, 4:15 PM - Nagpur Warehouse'},
+      {projectId:1,type:'doc',title:'Inspection report approved by site engineer',time:'Jun 3, 2026 - Pune Office Complex'},
+      {projectId:2,type:'note',title:'Wiring inspection scheduled for Friday',time:'Jun 2, 2026 - Amravati Substation'}
+    ];
+    const docs=['Electrical safety inspection report.pdf','Civil milestone completion certificate.pdf','BOQ and material approval sheet.pdf','Monthly progress summary.pdf'];
+    const defaultRequests=[
+      {projectId:0,title:'Add photos for Block B flooring',project:'Nagpur Warehouse Complex',type:'Site visit update',status:'Open',created:'Existing request'},
+      {projectId:2,title:'Confirm HT panel delivery date',project:'Amravati 33kV Substation',type:'Material clarification',status:'Open',created:'Existing request'},
+      {projectId:1,title:'Share updated payment milestone',project:'Pune Office Complex Rewiring',type:'Payment document',status:'Done',created:'Resolved request'},
+      {projectId:0,title:'Schedule manager call',project:'Nagpur Warehouse Complex',type:'Site visit update',status:'Done',created:'Resolved request'}
+    ];
+    let clientRequests=JSON.parse(localStorage.getItem('muktaiClientRequests')||'null') || defaultRequests;
+    let selected=0;
+    let currentUser=null;
+    const demoUsers=[
+      {name:'Rajesh Kumar',email:'warehouse@muktai.com',password:'client123',company:'Nagpur Warehouse Client',projectId:0},
+      {name:'Priya Shah',email:'pune@muktai.com',password:'client123',company:'Pune Office Client',projectId:1},
+      {name:'Amit Deshmukh',email:'substation@muktai.com',password:'client123',company:'Amravati Substation Client',projectId:2}
+    ];
+
+    function initials(name){return name.split(' ').map(part=>part[0]).join('')}
+    function visibleProjects(){
+      if(!currentUser) return [projects[0]];
+      return projects.filter(project=>project.id===Number(currentUser.projectId));
+    }
+    function activeProject(){
+      return projects.find(project=>project.id===selected) || visibleProjects()[0] || projects[0];
+    }
+    function visibleRequests(){
+      const projectIds=visibleProjects().map(project=>project.id);
+      const projectNames=visibleProjects().map(project=>project.name);
+      return clientRequests.filter(request=>projectIds.includes(Number(request.projectId)) || projectNames.includes(request.project));
+    }
+    function getUsers(){
+      const users=JSON.parse(localStorage.getItem('muktaiPortalUsers')||'[]').map(user=>({
+        ...user,
+        projectId:user.projectId ?? 0
+      }));
+      demoUsers.forEach(demo=>{
+        if(!users.some(user=>user.email===demo.email)) users.push(demo);
+      });
+      localStorage.setItem('muktaiPortalUsers',JSON.stringify(users));
+      return users;
+    }
+    function saveUsers(users){localStorage.setItem('muktaiPortalUsers',JSON.stringify(users))}
+    function switchAuth(mode){
+      loginTab.classList.toggle('active',mode==='login');
+      signupTab.classList.toggle('active',mode==='signup');
+      loginForm.classList.toggle('active',mode==='login');
+      signupForm.classList.toggle('active',mode==='signup');
+      loginError.classList.remove('show');
+      signupError.classList.remove('show');
+    }
+    function showAuthError(id,message){
+      const box=document.getElementById(id);
+      box.textContent=message;
+      box.classList.add('show');
+    }
+    function updateClientProfile(user){
+      clientName.textContent=user.name;
+      clientRole.textContent=user.company || 'Client Account';
+      clientAvatar.textContent=initials(user.name).slice(0,2).toUpperCase();
+    }
+    function showPortal(user){
+      user.projectId=user.projectId ?? 0;
+      currentUser=user;
+      selected=Number(user.projectId);
+      updateClientProfile(user);
+      renderProjects();
+      renderSideSections();
+      renderDetail();
+      closeProjectWorkspace();
+      authScreen.style.display='none';
+      portalApp.classList.remove('locked');
+      showToast('Welcome, '+user.name+'.');
+    }
+    function loginUser(event){
+      event.preventDefault();
+      const email=loginEmail.value.trim().toLowerCase();
+      const password=loginPassword.value;
+      const user=getUsers().find(item=>item.email.toLowerCase()===email && item.password===password);
+      if(!user){
+        showAuthError('loginError','Invalid email or password. Try the demo account or sign up.');
+        return;
+      }
+      localStorage.setItem('muktaiPortalSession',JSON.stringify(user));
+      showPortal(user);
+    }
+    function signupUser(event){
+      event.preventDefault();
+      const user={
+        name:signupName.value.trim(),
+        email:signupEmail.value.trim().toLowerCase(),
+        company:signupCompany.value.trim(),
+        projectId:Number(signupProject.value),
+        password:signupPassword.value
+      };
+      if(user.password.length<6){
+        showAuthError('signupError','Password must be at least 6 characters.');
+        return;
+      }
+      const users=getUsers();
+      if(users.some(item=>item.email.toLowerCase()===user.email)){
+        showAuthError('signupError','An account already exists with this email.');
+        return;
+      }
+      users.push(user);
+      saveUsers(users);
+      localStorage.setItem('muktaiPortalSession',JSON.stringify(user));
+      showPortal(user);
+    }
+    function logoutUser(){
+      localStorage.removeItem('muktaiPortalSession');
+      currentUser=null;
+      portalApp.classList.add('locked');
+      authScreen.style.display='';
+      switchAuth('login');
+      showToast('Logged out successfully.');
+    }
+    function restoreSession(){
+      getUsers();
+      const user=JSON.parse(localStorage.getItem('muktaiPortalSession')||'null');
+      if(user) showPortal(user);
+    }
+    function statusLabel(status){return status==='active'?'Active':status==='hold'?'On Hold':'Review'}
+    function iconForStatus(status){return status==='done'?'check':status==='active'?'loader-2':'clock'}
+    function photoSvg(label,i){
+      const colors=[['#dbeafe','#2563eb'],['#dcfce7','#10b981'],['#fef3c7','#f59e0b'],['#ede9fe','#7c3aed']];
+      const c=colors[i%colors.length];
+      return `<svg viewBox="0 0 220 160" role="img" aria-label="${label}"><rect width="220" height="160" fill="${c[0]}"/><path d="M18 126h184" stroke="${c[1]}" stroke-width="3"/><rect x="46" y="54" width="92" height="72" rx="4" fill="#fff" stroke="${c[1]}" stroke-width="3"/><path d="M46 80h92M76 54v72M108 54v72" stroke="${c[1]}" stroke-width="2" opacity=".65"/><path d="M158 126V36h18v90M148 48h38M148 72h38M148 96h38" stroke="${c[1]}" stroke-width="3" fill="none"/><circle cx="164" cy="25" r="10" fill="${c[1]}" opacity=".7"/></svg>`;
+    }
+    function renderProjects(){
+      projectList.innerHTML=visibleProjects().map(p=>`<button class="project ${p.id===selected?'selected':''}" onclick="selectProject(${p.id})">
+        <div class="project-top"><div><h3>${p.name}</h3><div class="meta"><span><i class="ti ti-map-pin"></i> ${p.location}</span><span><i class="ti ti-calendar"></i> Due ${p.deadline}</span></div></div><span class="pill ${p.status}">${statusLabel(p.status)}</span></div>
+        <div class="progress-row"><div class="bar"><div class="fill" style="width:${p.progress}%"></div></div><span class="percent">${p.progress}%</span></div>
+        <div class="meta" style="margin-top:10px"><span class="pill tag">${p.type}</span><span>Your assigned project</span></div>
+      </button>`).join('');
+    }
+    function renderDetail(){
+      const p=activeProject();
+      detailHead.innerHTML=`<div class="card-title"><i class="ti ti-progress-check"></i>${p.name}</div><div style="display:flex;gap:8px;align-items:center"><span class="pill ${p.status}">${statusLabel(p.status)}</span><button class="btn" onclick="downloadReport()"><i class="ti ti-file-download"></i><span>Export</span></button></div>`;
+      detailBody.innerHTML=`<div class="detail-layout">
+        <div class="summary">
+          <div class="summary-item"><span>Completion</span><strong style="font-size:30px">${p.progress}%</strong><div class="bar" style="margin-top:10px"><div class="fill" style="width:${p.progress}%"></div></div></div>
+          <div class="summary-item"><span>Budget</span><strong>${p.budget}</strong></div>
+          <div class="summary-item"><span>Spent</span><strong>${p.spent}</strong></div>
+          <div class="summary-item"><span>Project Manager</span><strong>${p.manager}</strong></div>
+          <div class="summary-item"><span>Risk Level</span><strong>${p.risk}</strong></div>
+        </div>
+        <div>
+          <div class="card-title" style="margin-bottom:8px"><i class="ti ti-route"></i>Milestone Timeline</div>
+          <div class="milestones">${p.milestones.map(m=>`<div class="milestone"><div class="dot ${m[2]}"><i class="ti ti-${iconForStatus(m[2])}"></i></div><div><div class="ms-name">${m[0]}</div><div class="ms-date">${m[1]}</div></div><span class="pill ${m[2]==='done'?'active':m[2]==='active'?'review':'tag'}">${m[2]==='done'?'Done':m[2]==='active'?'In Progress':'Upcoming'}</span></div>`).join('')}</div>
+          <div class="card-title" style="margin:18px 0 10px"><i class="ti ti-photo"></i>Recent Site Photos</div>
+          <div class="photos">${p.photos.map((label,i)=>`<button class="photo" onclick="showToast('${label} photo opened.')">${photoSvg(label,i)}<span>${label}</span></button>`).join('')}</div>
+        </div>
+      </div>`;
+      managerText.textContent=`${p.manager} handles daily site updates.`;
+      managerInitials.textContent=initials(p.manager);
+      requestProject.value=p.id;
+    }
+    function renderSideSections(){
+      const allowedProjectIds=visibleProjects().map(project=>project.id);
+      const visibleActivity=activity.filter(item=>allowedProjectIds.includes(Number(item.projectId)));
+      const scopedRequests=visibleRequests();
+      const p=activeProject();
+      activityFeed.innerHTML=(visibleActivity.length?visibleActivity:[{type:'progress',title:'Project dashboard opened for client review',time:p.name}]).map(a=>`<div class="activity-item"><div class="act-icon ${a.type}"><i class="ti ti-${a.type==='photo'?'camera':a.type==='progress'?'chart-bar':a.type==='doc'?'file-text':'message'}"></i></div><div><strong>${a.title}</strong><span>${a.time}</span></div></div>`).join('');
+      documents.innerHTML=docs.map(d=>`<div class="doc-row"><div class="file"><i class="ti ti-file-type-pdf"></i><div><strong>${d}</strong><span>Updated this week</span></div></div><button class="btn icon" onclick="showToast('Downloading ${d}')"><i class="ti ti-download"></i></button></div>`).join('');
+      document.getElementById('requests').innerHTML=(scopedRequests.length?scopedRequests:[]).map(r=>`<div class="request-row"><div><strong>${r.title}</strong><div class="meta" style="margin-top:4px">${r.project} - ${r.type} - ${r.created}</div></div><span class="pill ${r.status==='Open'?'review':'active'}">${r.status}</span></div>`).join('') || '<div class="meta">No client requests for this project yet.</div>';
+      requestProject.innerHTML=visibleProjects().map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+      signupProject.innerHTML=projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+      const visible=visibleProjects();
+      const avg=Math.round(visible.reduce((sum,p)=>sum+p.progress,0)/visible.length);
+      avgProgress.textContent=avg+'%';
+      activeProjectsCount.textContent=visible.length;
+      projectNavBadge.textContent=visible.length;
+      openRequestsCount.textContent=scopedRequests.filter(r=>r.status==='Open').length;
+      sitePhotosCount.textContent=visible.reduce((sum,p)=>sum+p.photos.length,0);
+      projectBudget.textContent=p.budget;
+      projectSpent.textContent=p.spent+' spent on this project';
+      scheduleStatus.textContent=p.status==='hold'?'On Hold':'On Track';
+      scheduleNote.textContent=p.status==='hold'?'Awaiting vendor clearance':'Current client project is progressing';
+      milestoneCount.textContent=p.milestones.filter(m=>m[2]==='done').length;
+      deadlineValue.textContent=p.deadline.split(',')[0];
+      deadlineNote.textContent=p.name+' handover';
+    }
+    function openProjectWorkspace(){
+      projectWorkspace.classList.add('show');
+      scrollToSection('projectWorkspace');
+    }
+    function closeProjectWorkspace(){
+      projectWorkspace.classList.remove('show');
+    }
+    function selectProject(id){
+      if(!visibleProjects().some(project=>project.id===id)){
+        showToast('This login only has access to its assigned project.');
+        return;
+      }
+      selected=id;
+      renderProjects();
+      renderDetail();
+      setActiveNav(document.querySelector('.nav-item[onclick*="projects"]'));
+      openProjectWorkspace();
+      showToast(projects[id].name+' details opened.');
+    }
+    function openModal(id){document.getElementById(id).classList.add('show')}
+    function closeModal(id){document.getElementById(id).classList.remove('show')}
+    function submitRequest(){
+      const project=projects[Number(requestProject.value)];
+      const type=requestType.value;
+      const message=requestMessage.value.trim();
+      if(!message){
+        showToast('Please write a request message first.');
+        return;
+      }
+      clientRequests.unshift({
+        projectId:project.id,
+        title:message,
+        project:project.name,
+        type:type,
+        status:'Open',
+        created:'Just now'
+      });
+      localStorage.setItem('muktaiClientRequests',JSON.stringify(clientRequests));
+      requestMessage.value='';
+      renderSideSections();
+      closeModal('requestModal');
+      openProjectWorkspace();
+      scrollToSection('requestsSection');
+      showToast('Request added to Client Requests.');
+    }
+    function sendMessage(){closeModal('messageModal');showToast('Message sent successfully.')}
+    function downloadReport(){showToast('Progress report prepared for download.')}
+    function setActiveNav(item){
+      if(!item) return;
+      document.querySelectorAll('.nav-item').forEach(nav=>nav.classList.remove('active'));
+      item.classList.add('active');
+    }
+    function scrollToSection(id){
+      document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function handleNav(item,section){
+      setActiveNav(item);
+      if(section==='dashboard'){
+        closeProjectWorkspace();
+        scrollToSection('dashboardSection');
+      }
+      if(section==='projects') openProjectWorkspace();
+      if(section==='photos'){
+        openProjectWorkspace();
+        scrollToSection('detailSection');
+        showToast('Recent site photos are shown inside the selected project details.');
+      }
+      if(section==='reports'){
+        openProjectWorkspace();
+        scrollToSection('reportsSection');
+      }
+      if(section==='alerts'){
+        openProjectWorkspace();
+        scrollToSection('requestsSection');
+        showToast('2 alerts need your attention.');
+      }
+      if(section==='messages') openModal('messageModal');
+      if(section==='settings') showToast('Settings panel will be available in the next version.');
+    }
+    function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>toast.classList.remove('show'),2200)}
+    document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+    renderProjects();renderSideSections();renderDetail();restoreSession();
+  </script>
+</body>
+</html>
